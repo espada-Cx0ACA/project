@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantablack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+        }
+        
+        .timer {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        
+        .observers {
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+        
+        .links {
+            margin-bottom: 40px;
+        }
+        
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 15px;
+            border: 1px solid #fff;
+            display: inline-block;
+            transition: none;
+        }
+        
+        .links a:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .mystique {
+            font-size: 1.1rem;
+            font-style: italic;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+            
+            .timer {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+            
+            .links a {
+                display: block;
+                margin: 10px 0;
+            }
+            
+            .mystique {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Vantablack</h1>
+    
+    <div class="timer" id="countdown">000d:00h:00m:00s</div>
+    
+    <div class="observers" id="observers">0 observateurs</div>
+    
+    <div class="links">
+        <a href="https://www.tiktok.com/@beezilla.prime" target="_blank">chaine tiktok</a>
+        <a href="https://www.tiktok.com/@beezilla.prime" target="_blank">contact</a>
+    </div>
+    
+    <div class="mystique" id="mystique">silence echoes where the awakened dwell</div>
+
+    <script>
+        let observers = parseInt(sessionStorage.getItem('observers')) || 0;
+        
+        const phrases = [
+            "silence echoes where the awakened dwell",
+            "the void whispers to those who listen",
+            "darkness reveals what light conceals",
+            "time flows backward for the enlightened",
+            "seekers find what they never sought",
+            "the path appears when eyes are closed",
+            "truth hides in the spaces between words",
+            "consciousness expands in the depths of nothing"
+        ];
+        
+        function updateObservers() {
+            if (!sessionStorage.getItem('visited')) {
+                observers++;
+                sessionStorage.setItem('observers', observers.toString());
+                sessionStorage.setItem('visited', 'true');
+            }
+            document.getElementById('observers').textContent = observers + ' observateurs';
+        }
+        
+        function updateTimer() {
+            const targetDate = new Date('December 31, 2025 23:59:59').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+            
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                const formattedDays = String(days).padStart(3, '0');
+                const formattedHours = String(hours).padStart(2, '0');
+                const formattedMinutes = String(minutes).padStart(2, '0');
+                const formattedSeconds = String(seconds).padStart(2, '0');
+                
+                document.getElementById('countdown').textContent = 
+                    formattedDays + 'd:' + formattedHours + 'h:' + formattedMinutes + 'm:' + formattedSeconds + 's';
+            } else {
+                document.getElementById('countdown').textContent = '000d:00h:00m:00s';
+            }
+        }
+        
+        function changeMystique() {
+            const randomIndex = Math.floor(Math.random() * phrases.length);
+            document.getElementById('mystique').textContent = phrases[randomIndex];
+        }
+        
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+        
+        updateObservers();
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
